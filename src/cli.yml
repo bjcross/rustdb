@@ -11,7 +11,7 @@ args:
       short: p
       long: port
       value_name: PORT
-      help: "Sets a custom port to listen on, default is 1434"
+      help: "Sets a custom port to listen on"
       takes_value: true
       default_value: "1434"
   - createdb:
