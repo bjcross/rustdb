@@ -1,0 +1,20 @@
+name: RustyDB
+version: "0.1"
+author: Garrett Olson, Brandon Cross, Kriss Strikis
+about: Is a database in Rust
+args:
+  - INPUT:
+      help: Sets database file to use
+      required: true
+      index: 1
+  - port:
+      short: p
+      long: port
+      value_name: PORT
+      help: "Sets a custom port to listen on, default is 1434"
+      takes_value: true
+      default_value: "1434"
+  - createdb:
+      short: -c    
+      long: createdb
+      help: Creates a database file using the input filename
