@@ -1,2 +1,3 @@
 Cargo.lock
-/target
+/server/target
+/client/target
