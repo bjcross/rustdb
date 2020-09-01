@@ -9,4 +9,6 @@ fn main() {
     println!("Input file location is: {}",input);
     let createdb: bool =  matches.is_present("createdb");
     println!("Create db present is {}", createdb);
+    let port = matches.value_of("port").unwrap();
+    println!("Port is {}", port);
 }
