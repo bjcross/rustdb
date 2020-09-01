@@ -17,4 +17,5 @@ args:
   - createdb:
       short: -c    
       long: createdb
+      takes_value: true
       help: Creates a database file using the input filename
