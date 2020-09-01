@@ -4,12 +4,17 @@ use clap::App;
 use std::error::Error;
 use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
+use std::fs::File;
+use std::io::prelude::*;
+
+#[derive(Serialize, Deserialize)]
 struct Database {
     name: String,
     tables: HashMap<String, Table>,
     initialized: bool,
 }
 
+#[derive(Serialize, Deserialize)]
 struct Table {
     name: String,
     columns: Vec<String>,
@@ -35,11 +40,15 @@ fn main() {
     let mut database: Database = if createdb == true {
         let dbname =  matches.value_of("createdb").unwrap();
         println!("Create db present is {}", dbname);
-        Database {
+        let mut file = File::create(input).unwrap();
+        let retvar = Database {
             name: String::from(dbname),
             tables: HashMap::new(),
             initialized: false,
-        }
+        };
+        let serialized = serde_json::to_string(&retvar).unwrap();
+        file.write(serialized.as_bytes()).unwrap();
+        retvar
     }
     else {
         Database {
