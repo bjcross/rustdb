@@ -18,14 +18,28 @@ struct Database {
 struct Table {
     name: String,
     columns: Vec<String>,
-    table: HashMap<String, Vec<String>>,
+    table: HashMap<String, Vec<String>>
 }
-impl Database {
 
+impl Database {
+    fn add_table(&mut self, name: String, cols: Vec<String>) {
+        let mut table = Table::new(name.clone(), cols);
+        self.tables.insert(name,table);
+        if self.initialized == false {
+            self.initialized = true;
+        }
+    }
+    fn get_table(&mut self, name: String) -> &Table {
+        let mut table: &Table = self.tables.get(&name).unwrap();
+        table
+    }
 }
 
 impl Table {
-
+    pub fn new(name: String, cols: Vec<String>) -> Table {
+        let mut map: HashMap<String, Vec<String>> = HashMap::new();
+        Table { name: name, columns: cols, table: map }
+    }
 }
 fn main() {
     let yaml = load_yaml!("cli.yml");
@@ -51,10 +65,10 @@ fn main() {
         retvar
     }
     else {
-        Database {
-            name: String::from("temptemp"),
-            tables: HashMap::new(),
-            initialized: false,
-        }
+        let mut file = File::open(input).unwrap();
+        let mut contents = String::new();
+        file.read_to_string(&mut contents).unwrap();
+        let retvar: Database = serde_json::from_str(&contents).unwrap();
+        retvar
     };
 }
